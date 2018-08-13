@@ -11,11 +11,9 @@ end
 # them as 1-10.
 
 def assignment_scores(grade_hash, assignment)
-  assignment_grades = []
-  grade_hash.each do | name, grades |
-    assignment_grades << grades[assignment-1] 
+  grade_hash.map do | name, grades |
+    grades[assignment-1] 
   end
-  assignment_grades
 end
 
 # Given a grade_hash and assignment number, return the average score for that
@@ -36,9 +34,8 @@ end
 # use .to_h. Also look at Hash#transform_values.
 
 def averages(grade_hash)
-  assignment_grades = []
-  grade_hash.each do | name, grades |
-    assignment_grades << [name, average(grades)]
+  assignment_grades = grade_hash.map do | name, grades |
+    [name, average(grades)]
   end
   assignment_grades.to_h()
 end
@@ -52,27 +49,24 @@ end
 
 def letter_grade(num_grade)
   if num_grade >= 90
-    grade = 'A'
+    'A'
   elsif num_grade >= 80
-    grade = 'B'
+    'B'
   elsif num_grade >= 70
-    grade = 'C'
+    'C'
   elsif num_grade >= 60
-    grade = 'D'
+    'D'
   else
-    grade = 'F'
+    'F'
   end
-
-  grade
 end
 
 # Return a hash of students and their final letter grade, as determined
 # by their average.
 
 def final_letter_grades(grade_hash)
-  final_letter_grade = []
-  averages(grade_hash).each do | name, grade |
-    final_letter_grade << [name, letter_grade(grade)]
+  final_letter_grade = averages(grade_hash).map do | name, grade |
+    [name, letter_grade(grade)]
   end
   final_letter_grade.to_h()
 end
@@ -86,6 +80,6 @@ end
 # Return an array of the top `number_of_students` students.
 
 def top_students(grade_hash, number_of_students)
-    students = averages(grade_hash).sort_by { |name, grade | grade }.reverse.to_h
+    students = averages(grade_hash).sort_by { | name, grade | grade }.reverse.to_h
     students.keys[0..number_of_students-1]
 end
